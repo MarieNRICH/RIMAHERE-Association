@@ -7,4 +7,5 @@ Vues
 Fichiers : Index, Header, Footer.php
 SASS
 Composer
-Création du 
+Création du BDD
+Création du MCD
