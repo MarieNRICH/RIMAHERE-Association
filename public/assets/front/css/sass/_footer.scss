@@ -1,0 +1,57 @@
+footer {
+
+    h4 {
+        font-size: 1.8rem;
+        padding-left: 1rem;
+        padding-bottom: 1rem;
+        border-bottom: 1px dashed #ebe3db;
+        margin-bottom: 1rem;
+    }
+    
+    aside {
+        padding: 2rem;
+        text-align: center;
+    }
+    
+    aside {
+        list-style: none;
+    }
+    
+    li {
+        list-style: none;
+        text-decoration: none;
+    }
+    
+    .reseaux a {
+        color: #ebe3db;
+        font-size: 2.5rem;
+        text-decoration: none;
+        margin: 1rem;
+        transition: .7s color;
+    }
+    
+    .reseaux a:hover {
+        color: #950000;
+    }
+    
+    .footer {
+        padding: 2em;
+        text-align: center;
+        color: #fff;
+        background-color: #444;
+    }
+    
+    img {
+        width: 5%;
+    }
+    
+    .footer a {
+        color: white;
+    }
+    
+    background: url(img/rimahere.jpeg) no-repeat;
+	background-size: cover;
+	color: white;
+	font-size: 1.6rem;
+
+}
