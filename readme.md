@@ -1,1 +1,12 @@
-bienvenue sur mon repo
+Bienvenue sur mon repo 
+
+Wireframe Mobile / Desktop
+MVC
+Autoload
+Router / Dispatcher
+Vues
+Fichiers : Index, Header, Footer.php
+SASS
+Composer
+Création du BDD
+Création du MCD

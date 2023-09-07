@@ -1,0 +1,35 @@
+<main class="container">
+<h2>Vous êtes sur la page de contact</h2>
+
+<form action="" method="post">
+	<fieldset>
+		<legend>Mes coordonnées</legend>
+		<div class="field">
+			<label for="name">Nom</label>
+			<div class="value"><input type="text" id="name" name="name"></div>
+		</div>
+		<div class="field">
+			<label for="email">Email</label>
+			<div class="value"><input type="email" id="email"></div>
+		</div>
+	</fieldset>
+	<fieldset>
+		<legend>Ma demande</legend>
+		<div class="field">
+			<select name="object">
+				<option value="0">Choisir l'objet de ma demande...</option>
+				<option value="q">Question d'ordre général</option>
+				<option value="g">Danse Ori Tahiti</option>
+				<option value="b">Atelier création avec la vannerie </option>
+			</select>
+		</div>
+		<textarea name="query" id="query"></textarea>
+	</fieldset>
+	<div class="toolbar">
+		<button type="submit" class="button" name="contactForm">Valider le formulaire</button>
+	</div>
+</form>
+</main>
+<?php foreach($data as $message){
+    echo $message;
+}?>
