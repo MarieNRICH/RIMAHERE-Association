@@ -1,20 +1,20 @@
 <main class="container">
-<h2>Vous êtes sur la page de contact</h2>
+<h2>Nous contacter</h2>
 
 <form action="" method="post">
 	<fieldset>
-		<legend>Mes coordonnées</legend>
+		
 		<div class="field">
-			<label for="name">Nom</label>
-			<div class="value"><input type="text" id="name" name="name"></div>
+			<label for="name">Votre nom</label>
+			<div class="value"><input type="text" id="name" name="name" placeholder="Entrez votre nom"></div>
 		</div>
 		<div class="field">
-			<label for="email">Email</label>
-			<div class="value"><input type="email" id="email"></div>
+			<label for="email">Votre email</label>
+			<div class="value"><input type="email" id="email"name="email" placeholder="Entrez votre email"></div>
 		</div>
 	</fieldset>
+	
 	<fieldset>
-		<legend>Ma demande</legend>
 		<div class="field">
 			<select name="object">
 				<option value="0">Choisir l'objet de ma demande...</option>
@@ -23,13 +23,15 @@
 				<option value="b">Atelier création avec la vannerie </option>
 			</select>
 		</div>
-		<textarea name="query" id="query"></textarea>
+		<div class="rgpdAgree">
+		<input type="checkbox" id="myCheck"  name="rgpdChecked"> J'autorise ce site à conserver mes données personnelle transmise via ce formulaire, le temps de me donner une réponse à ma demande. Aucune exploitation commerciale ne sera faite des données conservées. Voir notre <a href="https://www.economie.gouv.fr/entreprises/reglement-general-protection-donnees-rgpd" target="blank">politique de gestion des données personnelles</a>
+		<p id="text" style="display:none"></p>
+			
+		</div>
+		<textarea name="message" id="query"></textarea>
 	</fieldset>
 	<div class="toolbar">
-		<button type="submit" class="button" name="contactForm">Valider le formulaire</button>
+		<button type="submit" class="button" name="contactForm">Envoyer</button>
 	</div>
 </form>
 </main>
-<?php foreach($data as $message){
-    echo $message;
-}?>

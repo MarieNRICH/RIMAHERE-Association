@@ -16,8 +16,8 @@ const AVAIABLE_ROUTES = [   // le router
         'controller' => 'ActivityController'
     ],
     'contact'=>[
-        'action' => 'render',
-        'controller' => 'MainController'
+        'action' => 'renderContact',
+        'controller' => 'ContactController'
     ],
     'login'=>[
         'action' => 'renderUser',
