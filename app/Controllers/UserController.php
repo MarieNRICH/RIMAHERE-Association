@@ -1,7 +1,6 @@
 <?php
 
 namespace App\Controllers;
-
 use App\Models\UserModel;
 
 class UserController extends MainController
@@ -9,12 +8,10 @@ class UserController extends MainController
 
     public function renderUser(): void
     {
-        // si la vue stockée est logout
         if ($this->view === 'logout') {
-            // on appel la méthode logout()
-            $this->logout();
+                $this->logout(); // on appel la méthode logout()
         } else {
-            // sinon, s'il y'a une requête post c'est q'un formulaire à été soumis
+            // sinon, s'il y'a une requête post c'est q'un formulaire a été soumis
             if ($_SERVER["REQUEST_METHOD"] === "POST") {
                 // si le formulaire soumis est registerForm
                 if (isset($_POST["registerForm"])) {
@@ -27,8 +24,7 @@ class UserController extends MainController
                 }
             }
         }
-        // dans tous les cas on construit la page
-        $this->render();
+        $this->render(); // on construit la page
     }
 
     // méthode permettant l'inscription d'un utilisateur
@@ -108,12 +104,8 @@ class UserController extends MainController
 
     public function login(): void
     {
-
-        // on commence sans erreurs
         $errors = 0;
-        // on instancie un nouveau UserModel
         $user = new UserModel();
-        // on récupère l'utilisateur via son email
         $user = $user->getUserByEmail($_POST['email']);
 
         // si user renvoie false
@@ -134,7 +126,7 @@ class UserController extends MainController
                 // on redirige vers la page admin
                 if($user->getRole() < 3){
                     header('Location:' . $base_uri[0] . 'admin');
-                }                
+                }
             } else {
                 // sinon si les mots de passe ne concordent pas, il y'a une erreur
                 $errors = 1;

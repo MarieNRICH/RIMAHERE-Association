@@ -15,7 +15,7 @@ Class ActivityModel {
     private $user_id;
     
     public function getId() { // un getter récupérer une donnée et retourne tjs la valeur de la propriete
-        return $this->id; // $this, représent la class PostModel, 
+        return $this->id; // $this, représent la class ActivityModel, 
     }
     
     public function setId($id) { // permet de mod la vue
@@ -86,25 +86,25 @@ Class ActivityModel {
         $query = $dsn->prepare($sql);
         $query->execute();
         
-        // Récupérer les articles sous forme d'un tableau d'objets de type PostModel
+        // Récupérer les articles sous forme d'un tableau d'objets de type ActivityModel
         $activites = $query->fetchAll(PDO::FETCH_CLASS, 'App\Models\ActivityModel');
         
-        // Retourner le tableau de $posts
+        // Retourner le tableau de $activities
         return $activites;
     } 
     
-    public function getPostById($id) 
+    public function getActivityById($id) 
     {
         $dsn = DataBase::connectPDO();
         // Utiliser des paramètres dans la requête pour éviter les failles d'injection SQL
-        $sql = "SELECT * FROM posts WHERE id=:id";
+        $sql = "SELECT * FROM activities WHERE id=:id";
         $param = ['id'=> $id];
         // Préparer et exécuter la requête
         $query = $dsn->prepare($sql);
         $query->execute($param);
         
         // Définir le mode de récupération en FETCH_CLASS
-        $query->setFetchMode(PDO::FETCH_CLASS, 'App\Models\PostModel');
+        $query->setFetchMode(PDO::FETCH_CLASS, 'App\Models\ActivityModel');
         
         // Récupérer le message (post)
         $post = $query->fetch();

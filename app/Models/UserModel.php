@@ -1,7 +1,6 @@
 <?php
 namespace App\Models;
 use App\Utility\DataBase;
-use \PDO;
 
 // Ce modèle est la représentation "code" de notre table posts
 // elle aura donc autant de propriétés qu'il y'a de champs dans la table

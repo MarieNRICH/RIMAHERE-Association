@@ -1,6 +1,6 @@
 <?php
 require __DIR__.'/../vendor/autoload.php';
-
+session_start();
 
 const AVAIABLE_ROUTES = [   // le router
     'home'=>[
@@ -14,6 +14,10 @@ const AVAIABLE_ROUTES = [   // le router
     'activities'=>[
         'action' => 'renderActivity',
         'controller' => 'ActivityController'
+    ],
+    'profile'=>[
+        'action' => 'renderUser',
+        'controller' => 'UserController'
     ],
     'contact'=>[
         'action' => 'renderContact',
