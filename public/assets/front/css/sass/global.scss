@@ -20,7 +20,7 @@ GENERALITIES
 ***************************************************************** */
 
 /* Le corps du document */
-body {
+body * {
 	line-height: 1.5;
 	font-family: "Athiti",sans-serif;
 	font-size: 1.8rem;
@@ -247,6 +247,7 @@ TABLE
 .table {
 	width: 100%;
 	border-collapse: collapse;
+	color : #404040;
 }
 .table caption,
 .table th,

@@ -27,8 +27,13 @@
             <li><a href="<?=$base_uri[0] ?>/public/about">A Propos</a></li>
             <li><a href="<?=$base_uri[0] ?>/public/activities">Activités</a></li>
             <li><a href="<?=$base_uri[0] ?>/public/contact">Contact</a></li>
+
+            <?php if(isset($_SESSION['user_id'])): ?>
+            <li><a href="<?=$base_uri[0] ?>/public/logout">Déconnexion</a></li>
+            <?php else: ?>
             <li><a href="<?=$base_uri[0] ?>/public/register">Inscription</a></li>
             <li><a href="<?=$base_uri[0] ?>/public/login">Connexion</a></li>
+            <?php endif; ?>
             </ul>
         </nav>
     </div>

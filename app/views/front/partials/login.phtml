@@ -5,9 +5,14 @@
         <label for="email">Votre email</label>
         <input type="text" name="email" id="email"/>
         <label for="password">Votre password</label>
-        <input type="text" name="password" id="password"/>
-        <input type="submit" value="Envoyer" name="loginForm" onclick="myFunction"/>
+        <input type="password" name="password" id="password"/>
+        <input type="submit" value="Envoyer" name="loginForm"/>
     </form>
 </main> 
- <!--php foreach($data as $message){-->
- <!--   echo $message;-->
+<div>
+    <?php if (isset($data)) {
+        foreach ($data as $value) {
+            echo $value;
+        }
+    } ?>
+</div>

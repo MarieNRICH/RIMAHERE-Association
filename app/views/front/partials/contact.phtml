@@ -1,16 +1,22 @@
 <main class="container">
-<h2>Nous contacter</h2>
-
-<form action="" method="post">
+	<h2>Nous contacter</h2>
+	<?php
+	if(isset($data['contactInfos'])){
+		foreach($data['contactInfos'] as $message){
+		    echo $message;
+		}
+	}
+	?>
+	<form action="" method="post">
 	<fieldset>
 		
 		<div class="field">
-			<label for="name">Votre nom</label>
-			<div class="value"><input type="text" id="name" name="name" placeholder="Entrez votre nom"></div>
+			<label for="name"><abbr title="(required)" aria-hidden="true">*</abbr>Votre nom</label>
+			<div class="value"><input type="text" id="name" name="name" placeholder="Entrez votre nom" required></div>
 		</div>
 		<div class="field">
-			<label for="email">Votre email</label>
-			<div class="value"><input type="email" id="email"name="email" placeholder="Entrez votre email"></div>
+			<label for="email"><abbr title="(required)" aria-hidden="true">*</abbr>Votre email</label>
+			<div class="value"><input type="email" id="email" name="email" placeholder="Entrez votre email"></div>
 		</div>
 	</fieldset>
 	
@@ -24,7 +30,7 @@
 			</select>
 		</div>
 		<div class="rgpdAgree">
-		<input type="checkbox" id="myCheck"  name="rgpdChecked"> J'autorise ce site à conserver mes données personnelle transmise via ce formulaire, le temps de me donner une réponse à ma demande. Aucune exploitation commerciale ne sera faite des données conservées. Voir notre <a href="https://www.economie.gouv.fr/entreprises/reglement-general-protection-donnees-rgpd" target="blank">politique de gestion des données personnelles</a>
+		<input type="checkbox" id="myCheck"  name="rgpdChecked"><abbr title="(required)" aria-hidden="true">*</abbr> J'autorise ce site à conserver mes données personnelle transmise via ce formulaire, le temps de me donner une réponse à ma demande. Aucune exploitation commerciale ne sera faite des données conservées. Voir notre <a href="https://www.economie.gouv.fr/entreprises/reglement-general-protection-donnees-rgpd" target="blank">politique de gestion des données personnelles</a>
 		<p id="text" style="display:none"></p>
 			
 		</div>
@@ -35,10 +41,3 @@
 	</div>
 </form>
 </main>
-
-<?php foreach($data as $message){
-	
-    echo $message;
-
-}?>
-

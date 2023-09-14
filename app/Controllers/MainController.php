@@ -24,6 +24,7 @@ class MainController {
             // Si le rôle est inférieur ou égal au role demandé (le rôle 1 est le plus haut)
             if ($currentUserRole <= $role) {
                 return true;
+                
             }else if($currentUserRole == 3){
                 $redirect = explode('/public/', $_SERVER['REQUEST_URI']);
             header('Location: ' . $redirect[0] . '/public/profile');

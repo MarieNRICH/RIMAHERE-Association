@@ -1,1 +1,9 @@
-<h1>Bienvenue sur la page profil</h1>
+<h1>Bienvenue sur votre page profil <?php echo $_SESSION['user_name']; ?></h1>
+<h2><?=  date('d/M/Y');?></h2>
+<div>
+    <?php if (isset($data)) {
+        foreach ($data as $value) {
+            echo $value;
+        }
+    } ?>
+</div>

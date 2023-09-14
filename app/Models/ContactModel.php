@@ -35,13 +35,13 @@ class ContactModel
         // récupération de l'état de la requête (renvoie true ou false)
         $queryStatus = $pdoStatement->execute($params);
         // var_dump($queryStatus);
-        // on retourne le status
+        
         return $queryStatus;
         
     }
     
     public function getId() { // un getter récupérer une donnée et retourne tjs la valeur de la propriete
-        return $this->id; // $this, représent la class PostModel, 
+        return $this->id; // $this, représent la class ContactModel, 
     }
     
     public function setId($id) { // permet de mod la vue
@@ -72,12 +72,12 @@ class ContactModel
         $this->message = $message;
     }
     
-    public function getRgpdChecked() : string
+    public function getRgpdChecked()
     {
         return $this->rgpdChecked;
     }
     
-    public function setRgpdChecked(string $rgpdChecked) : void
+    public function setRgpdChecked($rgpdChecked) : void
     {
         $this->rgpdChecked = $rgpdChecked;
     }

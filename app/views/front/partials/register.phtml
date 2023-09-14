@@ -1,20 +1,30 @@
+
 <!-- Main Content-->
 <main class="container">
 	<h1>Inscription</h1>
+	
+	<?php
+	if(isset($data['registerInfos'])){
+		foreach($data['registerInfos'] as $message){
+		    echo $message;
+		}
+	}
+	?>
+	
 	<form action="#" method="post">
 			<div>
 				<fieldset>
 					<legend>Inscription</legend>
 					<label for="name"><abbr title="(required)" aria-hidden="true">*</abbr> Nom </label>
-					<input type="text" name="name" id="name" required>
+					<input type="text" name="name" id="name" >
 					<label for="firstname"><abbr title="(required)" aria-hidden="true">*</abbr> Prénom </label>
-					<input type="text" name="firstname" id="firstname" required>
+					<input type="text" name="firstname" id="firstname" >
 					<label for="email">Email</label>
 					<input type="email" name="email" id="email">
 					<label for="phone"><abbr title="(required)" aria-hidden="true">*</abbr> Telephone</label>
-					<input type="phone" name="phone" id="phone" required>
+					<input type="phone" name="phone" id="phone" >
 					<label for="password"><abbr title="(required)" aria-hidden="true">*</abbr> Mot de passe </label>
-					<input type="password" name="password" id="password" required>
+					<input type="password" name="password" id="password" >
 				</fieldset>
 				<div class="toolbar">
 					<button type="submit" class="button" value="Valider" name="registerForm">Valider</button>
@@ -25,7 +35,3 @@
 			<iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2706.2333346019823!2d-2.2617171238730704!3d47.290239609770616!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x480567225a235acb%3A0x7907b3a216c2f11!2sSalle%20polyvalente%20de%20l%E2%80%99immaculee!5e0!3m2!1sfr!2sfr!4v1694000708138!5m2!1sfr!2sfr" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
 		</div>
 </main>
-
-<?php foreach($data as $message){
-    echo $message;
-}?>

@@ -1,13 +1,15 @@
 <h2>Nos Ateliers</h2>
     <section class="services">
         <?php foreach($data as $activity): ?>
-        <div class="card">
-            <h3><?= $activity->getName(); ?></h3>
+        <article>
+            <div class="card">
+            <h3 class="ori"><?= $activity->getName(); ?></h3>
             <small><?= $activity->getDate(); ?></small>
             <p><?= $activity->getContent(); ?></p>
             <iframe src="https://www.facebook.com/plugins/video.php?height=314&href=https%3A%2F%2Fwww.facebook.com%2FVendeeVaa%2Fvideos%2F1324759935064651%2F&show_text=false&width=560&t=0" width="560" height="314" style="border:none;overflow:hidden" scrolling="no" frameborder="0" allowfullscreen="true" allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share" allowFullScreen="true"></iframe>
+            <div><a href="#" class="plus">En savoir plus</a></div>
             </div>
-        <?php endforeach; ?>
+        </article>
         <article>
     		<h3 class="ori">Ori Tahiti</h3>
     		<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ipsa consequatur pariatur quod aperiam ratione quo ipsum eligendi expedita itaque atque. Tempore, est, adipisci maxime nostrum quae omnis itaque vitae numquam minima consectetur aspernatur saepe voluptatibus fugit. Ab, aliquid, velit ducimus repellat maiores nulla totam placeat doloremque iusto ipsa nostrum dolor.</p>
@@ -29,3 +31,4 @@
     		<div><a href="#" class="plus">En savoir plus</a></div>
     	</article>
     </section>
+    <?php endforeach; ?>

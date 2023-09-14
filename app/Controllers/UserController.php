@@ -33,6 +33,7 @@ class UserController extends MainController
 
         // on commence sans erreurs
         $errors = 0;
+        $this->data['registerInfos'] = [];
         // récupération et filtrage des champs du formulaire. filter_input renvoie false s'il y'a une erreur
         $email = filter_input(INPUT_POST, 'email');
         $password = filter_input(INPUT_POST, 'password');
@@ -45,7 +46,7 @@ class UserController extends MainController
             // c'est qu'il y'a une erreur
             $errors = 1;
             // on stocke dans la propriété data le message d'erreur que l'on va afficher dans la vue ensuite
-            $this->data[] = '<div class="alert alert-danger" role="alert">Tous les champs sont obligatoires</div>';
+            array_push($this->data['registerInfos'],'<div class="error">Tous les champs sont obligatoires</div>');
         }
 
         // on filtre l'adresse email pour savoir si l'email donnée correspond au format d'une adresse email
@@ -55,14 +56,14 @@ class UserController extends MainController
             // c'est qu'il y'a une erreur
             $errors = 1;
             // on stocke dans la propriété data le message d'erreur que l'on va afficher dans la vue ensuite
-            $this->data[] = '<div class="alert alert-danger" role="alert">Le format de l\'email n\'est pas valide.</div>';
+            array_push($this->data['registerInfos'],'<div class="error">Le format de l\'email n\'est pas valide.</div>');
         }
         // si le mot de passe fait moins de 8 caractères
         if (strlen($password) < 8) {
             // C'est une erreur
             $errors = 1;
             // on stocke dans la propriété data le message d'erreur que l'on va afficher dans la vue ensuite
-            $this->data[] = '<div class="alert alert-danger" role="alert">Le mot de passe doit contenir au moins 8 caractères.</div>';
+            array_push($this->data['registerInfos'],'<div class="error">Le mot de passe doit contenir au moins 8 caractères.</div>');
         }
 
         // S'il n'y a pas d'erreurs
@@ -85,17 +86,17 @@ class UserController extends MainController
             if ($user->checkEmail()) {
                 // Si c'est le cas c'est une erreur
                 $errors = 1;
-                $this->data[] = '<div class="alert alert-danger" role="alert">Cet email est déjà pris, veuillez en choisir un autre.</div>';
+                array_push($this->data['registerInfos'],'<div class="error">Cet email est déjà pris, veuillez en choisir un autre.</div>');
             }
             // s'il n'y a toujours pas d'erreur, c'est tout bon !
             if ($errors < 1) {
                 // on peut enregistrer l'utilisateur en appellant la méthode registerUser, elle renvera true ou false
                 if ($user->registerUser()) {
                     // si elle renvoie true, on stocke dans data un message de validation
-                    $this->data[] =  '<div class="alert alert-success" role="alert">Enregistrement réussi, vous pouvez maintenant vous connecter</div>';
+                    array_push($this->data['registerInfos'],'<div class="success">Enregistrement réussi, vous pouvez maintenant vous connecter</div>');
                 } else {
                     // sinon on on stocke dans data un message d'erreur
-                    $this->data[] = '<div class="alert alert-danger" role="alert">Il y a eu une erreur lors de l\enregistrement</div>';
+                    array_push($this->data['registerInfos'],'<div class="error">Il y a eu une erreur lors de l\enregistrement</div>');
                 }
             }
         }
@@ -117,9 +118,10 @@ class UserController extends MainController
             if (password_verify($_POST['password'], $user->getPassword())) {
                 // si c'est le cas, on stocke notre objet user dans la session
                 $_SESSION['user_id'] = $user->getId();
-                $_SESSION['user_role'] = $user->getRole();                
+                $_SESSION['user_role'] = $user->getRole();  
+                $_SESSION['user_name'] = $user->getName();  
                 // on stocke un message dans la propriété data pour l'afficher dans la vue
-                $this->data[] =  '<div class="alert alert-success" role="alert">connexion réussie ! votre compte doit être modifié par un admin pour que vous ayez accès à l\'administration</div>';
+                $this->data[] =  '<div class="success">connexion réussie ! votre compte doit être modifié par un admin pour que vous ayez accès à l\'administration</div>';
 
                 // on créé une url de redirection
                 $base_uri = explode('index.php', $_SERVER['SCRIPT_NAME']);
@@ -135,7 +137,7 @@ class UserController extends MainController
         // s'il y à des erreurs
         if ($errors > 0) {
             //On stock dans data le message d'erreur à afficher dans la vue
-            $this->data[] = '<div class="alert alert-danger" role="alert">Email ou mot de passe incorrect</div>';
+            $this->data[] = '<div class="error">Email ou mot de passe incorrect</div>';
         }
     }
 
