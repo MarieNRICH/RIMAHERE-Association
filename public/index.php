@@ -2,7 +2,7 @@
 require __DIR__.'/../vendor/autoload.php';
 session_start();
 
-const AVAIABLE_ROUTES = [   // le router
+const AVAIABLE_ROUTES = [
     'home'=>[
         'action' => 'render',
         'controller' => 'MainController'
@@ -46,6 +46,18 @@ const AVAIABLE_ROUTES = [   // le router
     '404'=>[
         'action' => 'render',
         'controller' => 'ErrorController'
+    ],
+    'adminMessage'=>[
+        'action' => 'renderAdmin',
+        'controller' => 'AdminController'
+    ],
+    'add'=>[
+        'action' => 'renderAdmin',
+        'controller' => 'AdminController'
+    ],
+    'update'=>[
+        'action' => 'renderAdmin',
+        'controller' => 'AdminController'
     ],
 ];
 

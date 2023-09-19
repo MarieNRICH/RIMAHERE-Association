@@ -1,0 +1,23 @@
+
+<!--?php var_dump($data['messages']); ?>-->
+
+<?php
+    if (isset($data['infos'])) {    
+     echo $data['infos'];
+}
+
+?>
+<tbody>
+    <?php foreach ($data['messages'] as $key => $messages) : ?>
+    <tr>
+    <td><?= $messages->getName(); ?></td>
+    <td><a href="mailto:<?= $messages->getEmail(); ?>"><?= $messages->getEmail(); ?></a></td>
+    <td><?= $messages->getMessage(); ?></td>
+    
+    <td>
+<form class="" action="" method="post">
+    <input type="hidden" name="contactid" value="<?= $messages->getId(); ?>">
+    <input class="" name="contactForm" type="submit" value="Supprimer">
+</form>
+    </td>
+    <?php endforeach ?>

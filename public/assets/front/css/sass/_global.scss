@@ -24,20 +24,18 @@ body * {
 	line-height: 1.5;
 	font-family: "Athiti",sans-serif;
 	font-size: 1.8rem;
-	color: #555;
+	color: #fff;
 	background-color: #00748D;
 }
 
 /* Le titre principal d'un flux */
 h1 {
 	font-size: 6rem;
-	color: #DD5735;
 }
 
 /* Le titre de second niveau  */
 h2 {
 	font-size: 3.2rem;
-	color: #333;
 }
 
 /* Le titre de troisème niveau */
@@ -60,6 +58,11 @@ a:hover {
 /* Contenu principal */
 main {
 	padding: 2em;
+	background-color: transparent;
+}
+
+main .home .about-us {
+	background-color: transparent;
 }
 
 /* Les articles */

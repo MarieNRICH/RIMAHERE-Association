@@ -1,15 +1,27 @@
-<style type="text/css">
-    
-</style>
 
-<h1>Je suis bien la page administration</h1>
+
+<h1>Bienvenue sur votre page Admin !</h1>
+
+
+
+<!--<div>-->
+<!--    ?php -->
+    
+<!--        if (isset($data['activities'])) {    -->
+<!--        echo $data['activities'];-->
+        
+<!--    } ?>-->
+<!--</div>-->
+
 
 <div class="container">
-<a href="#" class="btn-add">Ajouter</a>
+<a href="#" class="btn-add" name="addActivityForm">Ajouter</a>
 <table class="table">
     <tr id="items">
         <td>Date</td>
-        <td>Name</td>
+        <td>Name
+        <?= $activities->getName(); ?>
+        </td>
         <td>Description</td>
         <td>Niveau</td>
         <td>Identifiant</td>
@@ -17,12 +29,24 @@
         <td>Supprimer</td>
     </tr>
     <tr>
-        <td>getDate</td>
-        <td>getName</td>
-        <td>getDescription</td>
-        <td><i class="fa-solid fa-pen"><a href="#">Modifier</a></i></td>
-        <td>SUPPRIMER</td>
+        <td><i class="fa-solid fa-pen"><a href="#" name="updateActivityForm">Modifier</a></i></td>
     </tr>
+    <?php foreach ($data['activities'] as $key => $activity) : ?>
+        <tr>
+            <td><img class="img-fluid" src="<?= $base_uri[0]; ?>/public/assets/front/img/<?= $activity->getImg(); ?>" alt=""></td>
+            <td>
+                <form class="d-flex justify-content-center align-items-center" action="" method="post">
+                    <input type="hidden" name="activityid" value="<?= $activity->getId(); ?>">
+                    <input class="btn btn-primary" type="submit" name ="deleteActivityForm" value="Delete">
+                </form>
+            </td>
+            <td>                                                                                                                    
+                    <a class="btn btn-primary" href="<?= $base_uri[0]; ?>/public/admin/update/<?= $activity->getId(); ?>" name="updateActivityForm">Update post</a>                                                        
+            </td>
+        </tr>
+    <?php endforeach ?>
+    
+    <?= $activity->getName(); ?>
 </table>
 
 

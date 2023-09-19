@@ -40,6 +40,16 @@ class ContactModel
         
     }
     
+    public function getMessages(){
+        $pdo = DataBase::connectPDO();
+        $sql = "SELECT * FROM contact";
+
+        $query = $pdo->prepare($sql);
+        $query->execute();
+        $messages = $query->fetchAll(PDO::FETCH_CLASS,'App\Models\ContactModel');
+        return $messages;
+    }
+    
     public function getId() { // un getter récupérer une donnée et retourne tjs la valeur de la propriete
         return $this->id; // $this, représent la class ContactModel, 
     }
