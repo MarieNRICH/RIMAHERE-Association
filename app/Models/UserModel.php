@@ -1,7 +1,8 @@
 <?php
 namespace App\Models;
 use App\Utility\DataBase;
-
+//++
+use \PDO;
 // Ce modèle est la représentation "code" de notre table posts
 // elle aura donc autant de propriétés qu'il y'a de champs dans la table
 // ça nous permettra de manipuler des objets identiques à une entrée de bdd grâce à PDO::FETCH_CLASS
@@ -15,6 +16,41 @@ class UserModel
     private $password;
     private $role;
 
+
+    //++ Méthode pour récupérer les utilisateurs
+    public static function getUsers(): ?array {
+        $dsn = DataBase::connectPDO();
+        // Commencer à construire la requête SQL
+        $sql = 'SELECT * FROM users';
+        
+        // Préparer et exécuter la requête
+        $query = $dsn->prepare($sql);
+        $query->execute();
+        
+        // Récupérer les utilisateurs sous forme d'un tableau d'objets de type UserModel
+        $users = $query->fetchAll(PDO::FETCH_CLASS, 'App\Models\UserModel');
+        
+        // Retourner le tableau de $users
+        return $users;
+    } 
+    //++ Méthode pour supprimer un utilisateur
+    public static function deleteUser($id): void
+    {
+
+        $pdo = DataBase::connectPDO();
+
+        // création requête avec liaison de param pour éviter les injections sql
+        $sql = "DELETE FROM `users` WHERE id=:id";
+        // préparation de la requête
+        $pdoStatement = $pdo->prepare($sql);
+        // liaison des params avec leur valeurs. tableau à passer dans execute
+        $params = [
+            ':id' => $id
+        ];
+        // récupération de l'état de la requête (renvoie true ou false)
+        $queryStatus = $pdoStatement->execute($params);
+
+    }
     // méthode pour enregistrer un user en bdd
     public function registerUser(): bool
     {
@@ -83,6 +119,54 @@ class UserModel
         }
         // on renvoie le résultat
         return $result;
+    }
+    //++récupération d'un utilisateur par son ID
+     public static function getUserById($id): ?UserModel
+    {
+        $pdo = DataBase::connectPDO();
+
+        $sql = '
+        SELECT * 
+        FROM users
+        WHERE id = :id';
+        $pdoStatement = $pdo->prepare($sql);
+    
+        $pdoStatement->execute([':id' => $id]);
+    
+        $result = $pdoStatement->fetchObject('App\Models\UserModel');
+
+        // si l'email ne correspond pas, ça va renvoyer false et on va rentrer dans la condition (car différent de true)        
+        if(!$result){
+            
+            // on donne à result null car notre méthode doit renvoyer soit UserModel soit null
+            $result = null;
+        }
+        // on renvoie le résultat
+        return $result;
+    }
+    
+    //++ méthode pour modifier un user en bdd
+    public function UpdateUser(): void
+    {
+
+        $pdo = DataBase::connectPDO();
+
+        // création requête avec liaison de param pour éviter les injections sq
+        $sql = "UPDATE `users` SET `name`=:name, `firstname`=:firstname,`email`=:email,`phone`=:phone,`role`=:role WHERE id=:id";
+        // préparation de la requête
+        $pdoStatement = $pdo->prepare($sql);
+        // liaison des params avec leur valeurs. tableau à passer dans execute
+        $params = [
+            ':name' => $this->name,
+            ':firstname' => $this->firstname,
+            ':email' => $this->email,
+            ':phone' => $this->phone,
+            ':role' => $this->role,
+            ':id' => $this->id,
+        ];
+        // execution de la requete
+        $pdoStatement->execute($params);
+
     }
     
     public function getId(): int

@@ -153,4 +153,5 @@ class UserController extends MainController
         // on redirige vers la home
         header('Location:' . $base_uri[0] . 'home');
     }
+    
 }

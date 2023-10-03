@@ -11,22 +11,27 @@ class ActivityController extends MainController
     public function renderActivity(): void
     {
         // on alimente la propriété data avec l'article 
-        $this->data =  ActivityModel::getActivities();
+        $this->data["activities"] = ActivityModel::getActivityById(1);
         // on construit la page
         $this->render();
     }
     
     // méthode pour ajouter une activité
-    
     public function addActivity(): void
     {
         $date =  date('Y-m-d');
-        // elle récupère une variable externe d'un champs de formulaire et la filtre
         $name = filter_input(INPUT_POST, 'name', FILTER_SANITIZE_SPECIAL_CHARS);
         $description = filter_input(INPUT_POST, 'description', FILTER_SANITIZE_SPECIAL_CHARS);
-        // Les catégories son récupérées mais pas encore gérées
         $nivel = filter_input(INPUT_POST, 'nivel', FILTER_DEFAULT, FILTER_REQUIRE_ARRAY);
-        $thumbnail = filter_input(INPUT_POST, 'thumbnail', FILTER_SANITIZE_URL);
+        
+        $activityModel = new ActivityModel();
+        // puis on utilise les setters pour ajouter les valeurs au propriétés privée du activityModel
+        
+        $activityModel->setDate($date);
+        $activityModel->setName($name);
+        $activityModel->setContent($description);
+        $activityModel->setNivel($nivel);
+        $activityModel->setUserId($userId);
         
         // on déclenche l'instertion d'article dans une conditions car PDO va renvoyer true ou false
         if ($activityModel->insertActivity()) {

@@ -5,12 +5,18 @@ namespace App\Controllers;
 use App\Controllers\MainController;
 use App\Models\ActivityModel;
 use App\Models\ContactModel;
+//++
+use App\Models\UserModel;
 
 class AdminController extends MainController
 {
     public function renderAdmin(): void
     {
-
+        //++
+        if (isset($_GET["idtodeleteuser"])) {
+            $idtodeleteuser=$_GET["idtodeleteuser"];
+            UserModel::deleteUser($idtodeleteuser);
+        }
         $this->checkUserAuthorization(1);
         if ($_SERVER["REQUEST_METHOD"] === "POST") {
             // et si le formulaire est addActivityForm
@@ -42,6 +48,8 @@ class AdminController extends MainController
         } else {
             // Sinon s'il n'y a pas de sous-page, on stocke dans la propriété data tous les articles pour les afficher dans la vue admin            
             $this->data['activities'] = ActivityModel::getActivities();
+            //++ Récupération des utilisateurs
+            $this->data['users'] = UserModel::getUsers();
         //  dans tous les cas on appelle la méthode render du controller parent pour construire la page
         $this->render();
         }
@@ -53,12 +61,12 @@ class AdminController extends MainController
 
         // filter_input est une fonction PHP
         // elle récupère une variable externe d'un champs de formulaire et la filtre
-        $date = date('Y-m-d');
+        $date = date('D-m-y');
         $name = filter_input(INPUT_POST, 'name', FILTER_SANITIZE_SPECIAL_CHARS);
         $description = filter_input(INPUT_POST, 'description', FILTER_SANITIZE_SPECIAL_CHARS);
         // Les catégories son récupérées mais pas encore gérées
-        $nivel = filter_input(INPUT_POST, 'categories', FILTER_DEFAULT, FILTER_REQUIRE_ARRAY);
-        $thumbnail = filter_input(INPUT_POST, 'thumbnail', FILTER_SANITIZE_URL);
+        $nivel = filter_input(INPUT_POST, 'nivel', FILTER_DEFAULT, FILTER_REQUIRE_ARRAY);
+        // $thumbnail = filter_input(INPUT_POST, 'thumbnail', FILTER_SANITIZE_URL);
 
         // On créé une nouvelle instance de ActivityModel
         $activityModel = new ActivityModel();
@@ -73,10 +81,10 @@ class AdminController extends MainController
         // on déclenche l'instertion d'article dans une conditions car PDO va renvoyer true ou false
         if ($activityModel->insertActivity()) {
             // donc si la requête d'insertion s'est bien passée, on renvoie true et on stocke un message de succès dans la propriété data
-            $this->data[] = '<div class="alert alert-success" role="alert">Article enregistré avec succès</div>';
+            $this->data[] = '<div class="success" role="alert">Activité enregistré avec succès</div>';
         } else {
             // sinon, stocke un message d'erreur
-            $this->data[] = '<div class="alert alert-danger" role="alert">Il s\'est produit une erreur</div>';
+            $this->data[] = '<div class="danger" role="alert">Il s\'est produit une erreur</div>';
         }
     }
 
@@ -92,8 +100,8 @@ class AdminController extends MainController
         $id = filter_input(INPUT_POST, 'activityid', FILTER_SANITIZE_NUMBER_INT);
         $name = filter_input(INPUT_POST, 'name', FILTER_SANITIZE_SPECIAL_CHARS);
         $description = filter_input(INPUT_POST, 'description', FILTER_SANITIZE_SPECIAL_CHARS);
-        $nivel = filter_input(INPUT_POST, 'categories', FILTER_DEFAULT, FILTER_REQUIRE_ARRAY);
-        $date = date('Y-m-d');
+        $nivel = filter_input(INPUT_POST, 'nivel', FILTER_DEFAULT, FILTER_REQUIRE_ARRAY);
+        $date = date('D-m-y');
 
         $activityModel = new ActivityModel();
         $activityModel->setId($id);
@@ -105,9 +113,9 @@ class AdminController extends MainController
 
 
         if ($activityModel->updateActivity()) {
-            $this->data['infos'] = '<div class="alert alert-success" role="alert">Article enregistré avec succès</div>';
+            $this->data['infos'] = '<div class="success" role="alert">Activité enregistré avec succès</div>';
         } else {
-            $this->data['infos'] = '<div class="alert alert-danger" role="alert">Il s\'est produit une erreur</div>';
+            $this->data['infos'] = '<div class="danger" role="alert">Il s\'est produit une erreur</div>';
         }
     }
 
@@ -118,9 +126,43 @@ class AdminController extends MainController
         $activityId = filter_input(INPUT_POST, 'activityid', FILTER_SANITIZE_SPECIAL_CHARS);
 
         if (ActivityModel::deleteActivity($activityId)) {
-            $this->data['infos'] = '<div class="alert alert-success d-inline-block mx-4" role="alert">Article supprimé avec succès</div>';
+            $this->data['infos'] = '<div class="success d-inline-block mx-4" role="alert">Article supprimé avec succès</div>';
         } else {
-            $this->data['infos'] = '<div class="alert alert-danger" role="alert">Il s\'est produit une erreur</div>';
+            $this->data['infos'] = '<div class="danger" role="alert">Il s\'est produit une erreur</div>';
         }
+    }
+    //++ Méthode pour modifier un utilisateur
+    public function userUpdateAdmin(): void
+    {
+        $id=$_GET["id"];
+        //vérification des droits admin
+        $this->checkUserAuthorization(1);
+        
+        //vérifier si l'administrateur a cliqué sur le bouton modifier
+        if(isset($_POST['updateuser'])){
+            // on créer une nouvelle instance de UserModel
+            $user = new UserModel();
+            // On alimente les propriétés grâce aux setters
+            $user->setEmail($_POST['email']);
+            $user->setName($_POST['name']);
+            $user->setFirstname($_POST['firstname']);
+            $user->setPhone($_POST['phone']);
+            $user->setRole($_POST['role']);
+            $user->setId($id);
+            //modification dans la BDD
+            $user->UpdateUser();
+            
+        }
+        
+        //récuperer les informations de l'utilisateur
+        $this->data['user'] = UserModel::getUserById($id);
+        
+        
+        
+        
+        //pointage sur la vue partiel : userUpdateAdmin.phtml
+        $this->viewType = 'admin';
+        $this->view = 'userUpdateAdmin';
+        $this->render();
     }
 }

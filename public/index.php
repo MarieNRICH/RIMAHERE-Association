@@ -59,6 +59,11 @@ const AVAIABLE_ROUTES = [
         'action' => 'renderAdmin',
         'controller' => 'AdminController'
     ],
+    //++
+    'userUpdateAdmin'=>[
+        'action' => 'userUpdateAdmin',
+        'controller' => 'AdminController'
+    ],
 ];
 
 

@@ -46,6 +46,14 @@ Class ActivityModel {
         $this->description = $description;
     }
     
+    public function getNivel() {
+        return $this->nivel;
+    }
+    
+    public function setNivel($nivel) {
+        $this->nivel = $nivel;
+    }
+    
     public function getImg() {
         return $this->img;
     }
@@ -93,63 +101,37 @@ Class ActivityModel {
         return $activities;
     } 
     
-    public function getActivityById($id) 
+    public function getActivityById($id)
     {
         $dsn = DataBase::connectPDO();
-        // Utiliser des paramètres dans la requête pour éviter les failles d'injection SQL
-        $sql = "SELECT * FROM activities WHERE id=:id";
-        $param = ['id'=> $id];
-        // Préparer et exécuter la requête
-        $query = $dsn->prepare($sql);
-        $query->execute($param);
-        
-        // Définir le mode de récupération en FETCH_CLASS
-        $query->setFetchMode(PDO::FETCH_CLASS, 'App\Models\ActivityModel');
-        
-        // Récupérer le message (post)
-        $post = $query->fetch();
-        
-        return $post;
-        
-    } 
     
-    // méthode pour enregistrer un user en bdd
-    public function registerActivity(): bool
-    {
-
-        $pdo = DataBase::connectPDO();
-
-        // création requête avec liaison de param pour éviter les injections sq
-        $sql = "INSERT INTO `activities`(`date`, `name`,`description`,`nivel`,`user_id`,`role`) VALUES (:date,:name,:description,:nivel,:user_id)";
-        // préparation de la requête
-        $pdoStatement = $pdo->prepare($sql);
-        // liaison des params avec leur valeurs. tableau à passer dans execute
-        $params = [
-            ':date' => $this->date,
-            ':name' => $this->name,
-            ':description' => $this->description,
-            ':nivel' => $this->nivel,
-            // ':user_id' => $this->user_id,
-        ];
-        // récupération de l'état de la requête (renvoie true ou false)
-        $queryStatus = $pdoStatement->execute($params);
-
-        // on retourne le status
-        return $queryStatus;
+        // Utiliser un paramètre lié pour sécuriser la requête
+        $sql = "SELECT users.* FROM users
+                INNER JOIN activity_has_user ON users.user_id = activity_has_user.user_id
+                WHERE activity_has_user.activity_id = :id";
+    
+        // Préparer et exécuter la requête avec un paramètre lié
+        $query = $dsn->prepare($sql);
+        $query->bindParam(':id', $id, PDO::PARAM_INT);
+        $query->execute();
+    
+        // Récupérer la liste des utilisateurs
+        $users = $query->fetchAll(PDO::FETCH_ASSOC);
+        var_dump($users);
+        return $users;
     }
     
-    
+    // méthode pour enregistrer une activité en bdd
     public function addActivity(): bool 
     {
         $dsn = DataBase::connectPDO();
         $user_id = $_SESSION['user_id'];
-        $sql = "INSERT INTO `activities`(`date`, `name`,`description`,`nivel`,`user_id`) VALUES (:date,:name,:description,:nivel,:user_id)";
+        $sql = "INSERT INTO `activities`(`date`, `name`,`description`,`nivel`) VALUES (:date,:name,:description,:nivel)";
         $param = [
             'date'=> $this->date,
             'name' => $this->name,
             'description' => $this->description,
             'nivel' => $this->nivel,
-            'user_id' =>  $user_id,
             ];
         // Préparer et exécuter la requête
         $query = $dsn->prepare($sql);
@@ -164,6 +146,55 @@ Class ActivityModel {
         return $post;
         
     } 
+    
+     public function updateActivity(): bool
+    {
+
+        $pdo = DataBase::connectPDO();
+
+        // création requête avec liaison de param pour éviter les injections sq
+        $sql = "UPDATE `activities` SET `id` (`date`, `name`,`description`,`nivel`) VALUES (:date,:name,:description,:nivel) WHERE 1";
+        // préparation de la requête
+        $pdoStatement = $pdo->prepare($sql);
+        // liaison des params avec leur valeurs. tableau à passer dans execute
+        $params = [
+            ':date' => $this->date,
+            ':name' => $this->name,
+            ':description' => $this->description,
+            ':nivel' => $this->nivel,
+        ];
+        // récupération de l'état de la requête (renvoie true ou false)
+        $queryStatus = $pdoStatement->execute($params);
+
+        // on retourne le status
+        return $queryStatus;
+    }
+    
+    public function removeActivity(): void
+    {
+        $pdo = DataBase::connectPDO();
+
+        // création requête avec liaison de param pour éviter les injections sq
+        $sql = "DELETE FROM `activities` SET `id` (`date`, `name`,`description`,`nivel`) VALUES (:date,:name,:description,:nivel) WHERE 0";
+        // préparation de la requête
+        $pdoStatement = $pdo->prepare($sql);
+        // liaison des params avec leur valeurs. tableau à passer dans execute
+        $params = [
+            ':date' => $this->date,
+            ':name' => $this->name,
+            ':description' => $this->description,
+            ':nivel' => $this->nivel,
+        ];
+        
+        // récupération et filtrage du champs 
+        $activityId = filter_input(INPUT_POST, 'activityid', FILTER_SANITIZE_SPECIAL_CHARS);
+
+        if (ActivityModel::deleteActivity($activityId)) {
+            $this->data['infos'] = '<div class="alert alert-success d-inline-block mx-4" role="alert">Activité supprimé avec succès</div>';
+        } else {
+            $this->data['infos'] = '<div class="alert alert-danger" role="alert">Il s\'est produit une erreur</div>';
+        }
+    }
 }
 
 ?>

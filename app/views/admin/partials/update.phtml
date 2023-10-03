@@ -1,1 +1,35 @@
-<h2>Vous êtes bien sur la page update !</h2>
+<h2>Vous êtes bien sur la page update réservé au admin!</h2>
+
+<!-- Main Content-->
+<main class="container">
+	<h1>Modifier une Activité</h1>
+	
+	<?php
+	if(isset($data['registerInfos'])){
+		foreach($data['registerInfos'] as $message){
+		    echo $message;
+		}
+	}
+	?>
+	
+<form action="#" method="post">
+	<div>
+			<fieldset>
+				<label for="name"><abbr title="(required)" aria-hidden="true">*</abbr> Date </label>
+				<input type="text" name="date" id="date" >
+				<label for="name"><abbr title="(required)" aria-hidden="true">*</abbr> Activité </label>
+				<input type="text" name="name" id="name" >
+				<label for="description">Description</label>
+				<input type="description" name="description" id="description">
+				<label for="nivel"><abbr title="(required)" aria-hidden="true">*</abbr> Niveau de difficulté</label>
+				<input type="nivel" name="nivel" id="nivel" >
+			</fieldset>
+			<div class="toolbar">
+				<button type="submit" class="button" value="Valider" name="addActivityForm">Valider</button>
+			</div>
+		</div>
+		<form class="d-flex justify-content-center align-items-center" action="" method="post">
+        <input type="hidden" name="activityid" value="?= $activity->getId(); ?>">
+        <input class="btn btn-primary" type="submit" name ="deleteActivityForm" value="Delete">
+    </form>
+</main>

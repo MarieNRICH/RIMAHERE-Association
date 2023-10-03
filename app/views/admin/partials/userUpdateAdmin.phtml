@@ -1,0 +1,45 @@
+
+
+
+<h2>Vous êtes bien sur la page update user réservé au admin!</h2>
+
+<!-- Main Content-->
+<main class="container">
+	<h1>Modifier un utilisateur</h1>
+	
+	<?php
+	if(isset($data['registerInfos'])){
+		foreach($data['registerInfos'] as $message){
+		    echo $message;
+		}
+	}
+	?>
+	
+<form action="" method="POST">
+	<div>
+			<fieldset>
+				<label for="name"><abbr title="(required)" aria-hidden="true">*</abbr> Nom </label>
+				<input type="text" name="name" id="name" value="<?= $data['user']->getName(); ?>" >
+				<br>
+				<label for="firstname"><abbr title="(required)" aria-hidden="true">*</abbr> Prénom </label>
+				<input type="text" name="firstname" id="firstname" value="<?= $data['user']->getFirstname(); ?>" >
+				<br>
+				<label for="email"><abbr title="(required)" aria-hidden="true">*</abbr> Email </label>
+				<input type="email" name="email" id="email" value="<?= $data['user']->getEmail(); ?>" >
+				<br>
+				<label for="phone"><abbr title="(required)" aria-hidden="true">*</abbr> Telephone </label>
+				<input type="text" name="phone" id="phone" value="<?= $data['user']->getPhone(); ?>" >
+				<br>
+				<label for="role"><abbr title="(required)" aria-hidden="true">*</abbr> Rôle </label>
+				<input type="text" name="role" id="role" value="<?= $data['user']->getRole(); ?>" >
+				
+				
+				
+			</fieldset>
+			<div class="toolbar">
+				<button type="submit" class="button" value="Valider" name="updateuser">Modifier</button>
+			</div>
+		</div>
+	
+    </form>
+</main>

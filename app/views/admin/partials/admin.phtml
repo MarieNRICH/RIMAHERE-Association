@@ -1,4 +1,36 @@
-
+<style type="text/css">
+    .table {
+        border-collapse : collapse;
+        min-width : 400px;
+        width : auto;
+        box-shadow : 0 5px 50px rgba(0,0,0,0.15);
+        cursor : pointer;
+        margin : 100px auto;
+        /*border : 2px solid midnightblue;*/
+        border : 1px solid #ddd;
+    }
+    thead tr {
+        background-color : midnightblue;
+        color :#fff;
+        text-align : left;
+    }
+    
+    th, td {
+        padding :15px 20px;
+    }
+    
+    tbody tr, td, th {
+        border : 1px solid #ddd;
+    }
+    
+    tbody tr:nth-child(even){
+        background-color: #f3f3f3;
+    }
+    
+    tbody tr:last-of-type {
+        border-bottom: 2px solid midnightblue;
+    }
+</style>
 
 <h1>Bienvenue sur votre page Admin !</h1>
 
@@ -13,42 +45,87 @@
 <!--    } ?>-->
 <!--</div>-->
 
-
-<div class="container">
-<a href="#" class="btn-add" name="addActivityForm">Ajouter</a>
+<div class="activities-container">
+    <a href="#" class="btn-add" name="addActivityForm">Ajouter</a>
 <table class="table">
-    <tr id="items">
-        <td>Date</td>
-        <td>Name
-        <?= $activities->getName(); ?>
-        </td>
-        <td>Description</td>
-        <td>Niveau</td>
-        <td>Identifiant</td>
-        <td>Modifier</td>
-        <td>Supprimer</td>
-    </tr>
-    <tr>
-        <td><i class="fa-solid fa-pen"><a href="#" name="updateActivityForm">Modifier</a></i></td>
-    </tr>
-    <?php foreach ($data['activities'] as $key => $activity) : ?>
+    <thead id="items">
         <tr>
-            <td><img class="img-fluid" src="<?= $base_uri[0]; ?>/public/assets/front/img/<?= $activity->getImg(); ?>" alt=""></td>
-            <td>
-                <form class="d-flex justify-content-center align-items-center" action="" method="post">
-                    <input type="hidden" name="activityid" value="<?= $activity->getId(); ?>">
-                    <input class="btn btn-primary" type="submit" name ="deleteActivityForm" value="Delete">
-                </form>
-            </td>
-            <td>                                                                                                                    
-                    <a class="btn btn-primary" href="<?= $base_uri[0]; ?>/public/admin/update/<?= $activity->getId(); ?>" name="updateActivityForm">Update post</a>                                                        
-            </td>
+            <th>
+                Date
+            </th>
+            <th>
+                Activité 
+            </th>
+            <th>
+                Description
+            </th>
+            <th>
+                Niveau de difficulté
+            </th>
+            <th>
+                Galerie Image
+            </th>
+            <th>
+                Nombre d'inscrit
+            </th>
         </tr>
+    </thead>
+<tbody>
+    <?php foreach ($data['activities'] as $activity) : ?>
+    <td><?= $activity->getDate(); ?></td>
+    <td><?= $activity->getName(); ?></td>
+    <td><?= $activity->getContent(); ?></td>
+    <td><?= $activity->getNivel(); ?></td>
+    <td>nbr d'inscrit</td>
     <?php endforeach ?>
-    
-    <?= $activity->getName(); ?>
+</tbody>
 </table>
-
-
-
 </div>
+<div class="users-container">
+    <a href="#" class="btn-add" name="addActivityForm">Ajouter</a>
+    <a href="#" class="btn-add" name="updateActivityForm">Modifier</a>
+    <a href="#" class="btn-add" name="deleteActivityForm">Supprimer</a>
+    <table class="table">
+        <thead>
+        <tr>
+            <th>Nom</th>
+            <th>Prénom</th>
+            <th>E-mail</th>
+            <th>Téléphone</th>
+            <th>Role</th>
+            <th>Options</th>
+        </tr>
+        </thead>
+        <tbody>
+            <?php foreach ($data['users'] as $key => $user) : ?>
+            <tr>
+                <td><?= $user->getName(); ?></td>
+                <td><?= $user->getFirstname(); ?></td>
+                <td><?= $user->getEmail(); ?></td>
+                <td><?= $user->getPhone(); ?></td>
+                <td><?= $user->getRole(); ?></td>
+                <td>
+                    <i class="fa-solid fa-pen"><a href="<?= $base_uri[0]; ?>/public/userUpdateAdmin?id=<?= $user->getId(); ?>" >Modifier</a></i>
+                    <i class="fa-solid fa-trash"><a href="<?= $base_uri[0]; ?>/public/admin?idtodeleteuser=<?= $user->getId(); ?>">Supprimer</a></i>
+                </td>
+            </tr>
+            <?php endforeach ?>
+        </tbody>
+    </table>
+</div>
+    <tr>
+        <td></td>
+    </tr>
+
+<tr>
+<td><img class="img-fluid" src="?= $base_uri[0]; ?>/public/assets/front/img/?= $activity->getImg(); ?>" alt=""></td>
+<td>
+    <form class="d-flex justify-content-center align-items-center" action="" method="post">
+        <input type="hidden" name="activityid" value="?= $activity->getId(); ?>">
+        <input class="btn btn-primary" type="submit" name ="deleteActivityForm" value="Delete">
+    </form>
+</td>
+<td>  
+<a class="btn btn-primary" href="<?= $base_uri[0]; ?>/public/admin/update
+<?= $activity->getId(); ?>" name="updateActivityForm">Update post</a></td>
+</tr>
